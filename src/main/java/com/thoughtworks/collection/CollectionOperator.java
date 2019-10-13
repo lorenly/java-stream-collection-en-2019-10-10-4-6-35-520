@@ -42,19 +42,30 @@ public class CollectionOperator {
     }
 
     public int popLastElment(int[] array) {
-        throw new NotImplementedException();
-       /* return IntStream.of(array)
-                .boxed()
-                .find)
-
-                .collect(Collectors.toList());*/
+        return IntStream.of(array)
+                .reduce((num1, num2) -> num2)
+                .getAsInt();//.collect(Collectors.toList());
     }
 
     public List<Integer> popCommonElement(int[] firstArray, int[] secondArray) {
-        throw new NotImplementedException();
+        return Arrays.stream(firstArray)
+                .filter(num -> IntStream.of(secondArray)
+                        .anyMatch(num2 -> num == num2))
+                .boxed()
+                .collect(Collectors.toList());
+
     }
 
     public List<Integer> addUncommonElement(Integer[] firstArray, Integer[] secondArray) {
-        throw new NotImplementedException();
+        List<Integer> result = new ArrayList<>();
+        List<Integer> fArray = Arrays.stream(firstArray).collect(Collectors.toList());
+
+        List<Integer> uncommonElements = Arrays.stream(secondArray)
+                .filter(num -> !fArray.contains(num))
+                .collect(Collectors.toList());
+
+        result.addAll(fArray);
+        result.addAll(uncommonElements);
+        return result;
     }
 }
